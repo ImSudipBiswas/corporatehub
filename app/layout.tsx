@@ -4,6 +4,8 @@ import { DM_Sans as FontSans } from "next/font/google";
 import "./globals.css";
 
 import { cn } from "@/lib/utils";
+import { Header } from "@/components/header";
+import { BottomNavigation } from "@/components/buttom-navigation";
 
 const fontSans = FontSans({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -22,7 +24,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn("min-h-screen antialiased font-sans bg-background", fontSans.variable)}>
+        <Header />
         {children}
+        <BottomNavigation />
       </body>
     </html>
   );
