@@ -1,0 +1,26 @@
+# Ignore build and output directories
+/.next
+/out
+
+# Ignore node_modules directory
+/node_modules
+
+# Ignore static files
+/public
+
+# Ignore test files
+/__tests__
+
+# Ignore coverage reports
+/coverage
+
+# Ignore logs and temporary files
+/logs
+/tmp
+
+# Ignore specific files
+/.env
+/.env.local
+/.env.development.local
+/.env.test.local
+/.env.production.local
