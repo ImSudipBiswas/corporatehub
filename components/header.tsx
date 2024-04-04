@@ -37,7 +37,7 @@ export const Header = () => {
           })}
         </div>
         <div className="h-full flex items-center gap-5">
-          <button className="relative text-foreground h-9 w-9 p-2 rounded-full hover:bg-muted transition-colors">
+          <button className="relative text-foreground h-9 w-9 p-2 rounded-full">
             <span className="absolute top-0 right-1 h-1.5 w-1.5 bg-accent rounded-full" />
             <Bell size={18} className="m-auto" />
           </button>

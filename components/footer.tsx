@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ChevronDown, Globe } from "lucide-react";
+
 import { footerLinks } from "@/lib/constants";
 
 export const Footer = () => {
@@ -8,8 +9,8 @@ export const Footer = () => {
       <div className="w-full md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto">
         <div className="px-4 md:px-6 py-2 md:py-4 lg:py-6 lg:px-0 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
           {footerLinks.map((section) => (
-            <div key={section.heading} className="p-4 w-max">
-              <h4 className="font-bold text-lg mb-3 w-max">{section.heading}</h4>
+            <div key={section.heading} className="py-4 px-2">
+              <h4 className="font-bold text-lg mb-3">{section.heading}</h4>
               <ul className="flex flex-col gap-1.5">
                 {section.links.map((link) => (
                   <li key={link.label}>

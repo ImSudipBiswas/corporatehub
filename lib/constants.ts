@@ -72,7 +72,7 @@ export const footerLinks = [
     heading: "Become an employer",
     links: [
       {
-        href: "/dashboard",
+        href: "/admin",
         label: "Post your job",
       },
       {
@@ -89,4 +89,17 @@ export const footerLinks = [
       },
     ],
   },
+];
+
+export const suggestedJobsSearches = [
+  "Founder",
+  "Founding partner",
+  "Board member",
+  "Personal Assistant",
+  "Entrepreneur in residence",
+  "project manager",
+  "Sales",
+  "Co-founder",
+  "Developer",
+  "Managing director",
 ];
