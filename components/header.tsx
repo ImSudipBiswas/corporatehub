@@ -2,14 +2,28 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useCallback } from "react";
 import { usePathname } from "next/navigation";
-import { Bell } from "lucide-react";
+import { Bell, User } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { navLinks } from "@/lib/constants";
+import { useAuth } from "@/hooks/use-auth";
+import { useModal } from "@/hooks/use-modal-store";
 
 export const Header = () => {
   const pathname = usePathname();
+  const { onOpen } = useModal();
+  const { organization } = useAuth();
+
+  const onClick = useCallback(() => {
+    if (organization) {
+      onOpen("sign-out");
+    } else {
+      onOpen("sign-in");
+    }
+    return;
+  }, [onOpen, organization]);
 
   return (
     <header className="sticky top-0 inset-x-0 h-16 border-b bg-background z-10">
@@ -36,18 +50,17 @@ export const Header = () => {
             );
           })}
         </div>
-        <div className="h-full flex items-center gap-5">
-          <button className="relative text-foreground h-9 w-9 p-2 rounded-full">
+        <div className="h-full flex items-center gap-3 sm:gap-5">
+          <button className="relative text-foreground h-9 w-9 p-2">
             <span className="absolute top-0 right-1 h-1.5 w-1.5 bg-accent rounded-full" />
             <Bell size={18} className="m-auto" />
           </button>
-          <button className="rounded-full relative h-9 w-9 overflow-hidden">
-            <Image
-              src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=400"
-              alt="Profile Picture"
-              fill
-              className="object-cover"
-            />
+          <button onClick={onClick} className="rounded-full relative h-9 w-9 overflow-hidden">
+            {organization?.image ? (
+              <Image src={organization.image} alt="Profile Picture" fill className="object-cover" />
+            ) : (
+              <User size={18} className="m-auto" />
+            )}
           </button>
         </div>
       </nav>

@@ -112,7 +112,7 @@ export const SignInModal = () => {
               )}
             />
             <button
-              className="flex mt-3 items-center justify-center w-full px-3 py-2 text-background bg-primary rounded-md hover:bg-primary/95 disabled:pointer-events-none disabled:opacity-70 transition"
+              className="flex mt-3 items-center justify-center w-full px-3 py-2 text-background bg-primary rounded-md hover:bg-primary/95 disabled:pointer-events-none disabled:opacity-70 disabled:cursor-not-allowed transition"
               disabled={isLoading}
             >
               {isLoading && <Loader2 className="h-4 w-4 animate-spin mr-2" />}

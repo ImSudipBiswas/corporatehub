@@ -6,8 +6,10 @@ import "./globals.css";
 
 import { cn } from "@/lib/utils";
 import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
 import { BottomNavigation } from "@/components/bottom-navigation";
-import { ModalProvider } from "@/components/modal-provider";
+import { ModalProvider } from "@/providers/modal-provider";
+import { Authprovider } from "@/providers/auth-provider";
 
 const fontSans = FontSans({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -26,11 +28,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn("min-h-screen antialiased font-sans bg-background", fontSans.variable)}>
-        <Header />
-        {children}
-        <ModalProvider />
-        <Toaster />
-        <BottomNavigation />
+        <Authprovider>
+          <Header />
+          <main className="w-full px-6 lg:px-0 md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto">
+            {children}
+          </main>
+          <Footer />
+          <ModalProvider />
+          <Toaster />
+          <BottomNavigation />
+        </Authprovider>
       </body>
     </html>
   );

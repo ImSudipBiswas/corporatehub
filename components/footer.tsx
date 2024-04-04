@@ -2,25 +2,14 @@
 
 import Link from "next/link";
 import { ChevronDown, Globe } from "lucide-react";
-import { useEffect, useState } from "react";
 
 import { useModal } from "@/hooks/use-modal-store";
+import { useAuth } from "@/hooks/use-auth";
 import { footerLinks } from "@/lib/constants";
-import { auth } from "@/lib/auth";
 
 export const Footer = () => {
   const { onOpen } = useModal();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      const data = await auth();
-      if (data) {
-        setIsLoggedIn(true);
-      }
-    };
-    checkAuth();
-  }, []);
+  const { isAuth } = useAuth();
 
   return (
     <footer className="w-full border-t max-sm:pb-16">
@@ -32,7 +21,7 @@ export const Footer = () => {
               <ul className="flex flex-col gap-1.5">
                 {section.links.map((link) => (
                   <li key={link.label}>
-                    {link.label === "Post your job" && !isLoggedIn ? (
+                    {link.label === "Post your job" && !isAuth ? (
                       <p
                         className="cursor-pointer text-sm sm:text-[15px] text-muted-foreground"
                         onClick={() => onOpen("sign-in")}

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-type Modal = "sign-in" | "sign-up";
+type Modal = "sign-in" | "sign-up" | "sign-out";
 
 interface ModalState {
   isOpen: boolean;

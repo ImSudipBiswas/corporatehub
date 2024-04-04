@@ -7,7 +7,7 @@ import Org from "@/models/organization";
 import { connectToDB } from "@/lib/mongoose";
 
 export async function POST(req: Request) {
-  const { email, name, password } = await req.json();
+  const { email, name, password, image } = await req.json();
   if (!email || !name || !password) {
     return new NextResponse("All fields are necessary", { status: 400 });
   }
@@ -33,7 +33,7 @@ export async function POST(req: Request) {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const org = new Org({ email, name, password: hashedPassword });
+    const org = new Org({ email, name, image, password: hashedPassword });
     await org.save();
 
     const token = jwt.sign({ id: org._id }, process.env.JWT_SECRET!, { expiresIn: "1d" });

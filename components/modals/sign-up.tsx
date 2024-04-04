@@ -25,9 +25,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useModal } from "@/hooks/use-modal-store";
+import ImageUpload from "../image-upload";
 
 const schema = z.object({
-  name: z.string({ required_error: "Name is required" }),
+  name: z
+    .string({ required_error: "Name is required" })
+    .min(3, "Name must be at least 3 characters"),
+  image: z.string({ required_error: "Image is required" }).min(1, "Image is required"),
   email: z.string({ required_error: "Email is required" }).email("Invalid email address"),
   password: z
     .string({ required_error: "Password is required" })
@@ -40,6 +44,7 @@ export const SignUpModal = () => {
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
+      image: "",
       name: "",
       email: "",
       password: "",
@@ -82,6 +87,19 @@ export const SignUpModal = () => {
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              name="image"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Profile picture</FormLabel>
+                  <FormControl>
+                    <ImageUpload label="Profile picture" disabled={isLoading} {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               name="name"
               control={form.control}
@@ -127,11 +145,11 @@ export const SignUpModal = () => {
               )}
             />
             <button
-              className="flex mt-3 items-center justify-center w-full px-3 py-2 text-background bg-primary rounded-md hover:bg-primary/95 disabled:pointer-events-none disabled:opacity-70 transition"
+              className="flex mt-3 items-center justify-center w-full px-3 py-2 text-background bg-primary rounded-md hover:bg-primary/95 disabled:pointer-events-none disabled:opacity-70 disabled:cursor-not-allowed transition"
               disabled={isLoading}
             >
               {isLoading && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
-              {isLoading ? "Signing in..." : "Sign In"}
+              {isLoading ? "Signing up..." : "Sign Up"}
             </button>
           </form>
         </Form>
