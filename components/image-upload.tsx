@@ -14,7 +14,7 @@ interface ImageUploadProps {
   disabled?: boolean;
 }
 
-const ImageUpload = ({ onChange, label, value, disabled }: ImageUploadProps) => {
+export const ImageUpload = ({ onChange, label, value, disabled }: ImageUploadProps) => {
   const [base64, setBase64] = useState<string>(value!);
 
   const handleChange = useCallback(
@@ -86,5 +86,3 @@ const ImageUpload = ({ onChange, label, value, disabled }: ImageUploadProps) => 
     </div>
   );
 };
-
-export default ImageUpload;

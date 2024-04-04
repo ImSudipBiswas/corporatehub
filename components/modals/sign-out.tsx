@@ -1,8 +1,9 @@
 "use client";
 
 import { useTransition } from "react";
+import { Loader2 } from "lucide-react";
 
-import { signOut } from "@/actions/sign-out";
+import { signOut } from "@/actions/auth";
 import {
   Dialog,
   DialogContent,
@@ -10,6 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 import { useModal } from "@/hooks/use-modal-store";
 
 export const SignOutModal = () => {
@@ -33,14 +35,15 @@ export const SignOutModal = () => {
           <DialogDescription>Are you sure you want to sign out?</DialogDescription>
         </DialogHeader>
         <form className="space-y-4">
-          <button
+          <Button
             formAction={handleSignOut}
             disabled={isPending}
             type="submit"
-            className="w-full rounded-full bg-primary text-background font-medium py-2 px-4 disabled:cursor-not-allowed disabled:pointer-events-none disabled:opacity-70"
+            className="w-full flex items-center"
           >
-            Sign out
-          </button>
+            {isPending && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
+            {isPending ? "Signing out..." : "Sign out"}
+          </Button>
         </form>
       </DialogContent>
     </Dialog>

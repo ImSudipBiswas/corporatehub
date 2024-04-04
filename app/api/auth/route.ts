@@ -16,11 +16,13 @@ export async function GET(req: Request) {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: any };
     if (!decoded || !decoded.id) {
+      cookies().set("token", "", { maxAge: 0 });
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
     const org = await Org.findById(decoded.id);
     if (!org) {
+      cookies().set("token", "", { maxAge: 0 });
       return new NextResponse("Unauthorized", { status: 401 });
     }
 

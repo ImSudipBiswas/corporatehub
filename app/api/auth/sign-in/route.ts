@@ -5,23 +5,17 @@ import { NextResponse } from "next/server";
 
 import Org from "@/models/organization";
 import { connectToDB } from "@/lib/mongoose";
+import { signInSchema } from "@/lib/utils";
 
 export async function POST(req: Request) {
-  const { email, password } = await req.json();
-  if (!email || !password) {
-    return new NextResponse("All fields are necessary", { status: 400 });
+  const reqBody = await req.json();
+
+  const validated = signInSchema.safeParse(reqBody);
+  if (!validated.success) {
+    return new NextResponse("Invalid data", { status: 400 });
   }
 
-  if (password.length < 6) {
-    return new NextResponse("Password must be at least 6 characters long", {
-      status: 400,
-    });
-  }
-
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-    return new NextResponse("Invalid email", { status: 400 });
-  }
+  const { email, password } = validated.data;
 
   try {
     await connectToDB();

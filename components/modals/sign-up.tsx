@@ -1,6 +1,5 @@
 "use client";
 
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { Loader2 } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,25 +23,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { ImageUpload } from "@/components/image-upload";
 import { useModal } from "@/hooks/use-modal-store";
-import ImageUpload from "../image-upload";
-
-const schema = z.object({
-  name: z
-    .string({ required_error: "Name is required" })
-    .min(3, "Name must be at least 3 characters"),
-  image: z.string({ required_error: "Image is required" }).min(1, "Image is required"),
-  email: z.string({ required_error: "Email is required" }).email("Invalid email address"),
-  password: z
-    .string({ required_error: "Password is required" })
-    .min(6, "Password must be at least 6 characters"),
-});
+import { type SignUpFormValues, signUpSchema, cn } from "@/lib/utils";
 
 export const SignUpModal = () => {
   const { isOpen, type, onClose, onOpen } = useModal();
 
-  const form = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
+  const form = useForm<SignUpFormValues>({
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
       image: "",
       name: "",
@@ -53,7 +43,7 @@ export const SignUpModal = () => {
 
   const isModalOpen = isOpen && type === "sign-up";
 
-  const onSubmit = async (values: z.infer<typeof schema>) => {
+  const onSubmit = async (values: SignUpFormValues) => {
     try {
       await axios.post("/api/auth/sign-up", values);
       toast.success("Signed in successfully");
@@ -138,24 +128,25 @@ export const SignUpModal = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="******" type="password" {...field} disabled={isLoading} />
+                    <Input placeholder="••••••" type="password" {...field} disabled={isLoading} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <button
-              className="flex mt-3 items-center justify-center w-full px-3 py-2 text-background bg-primary rounded-md hover:bg-primary/95 disabled:pointer-events-none disabled:opacity-70 disabled:cursor-not-allowed transition"
-              disabled={isLoading}
-            >
+            <Button className="flex items-center w-full" disabled={isLoading}>
               {isLoading && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
               {isLoading ? "Signing up..." : "Sign Up"}
-            </button>
+            </Button>
           </form>
         </Form>
         <DialogFooter>
           <p
-            className="cursor-pointer text-sm w-full text-muted-foreground text-justify hover:underline transition"
+            aria-disabled={isLoading}
+            className={cn(
+              "cursor-pointer text-sm w-full text-muted-foreground text-justify hover:underline transition",
+              isLoading && "pointer-events-none"
+            )}
             onClick={openSignInModal}
           >
             Already have an account? Sign in now
