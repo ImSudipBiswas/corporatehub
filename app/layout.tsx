@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { DM_Sans as FontSans } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 
 import "./globals.css";
 
 import { cn } from "@/lib/utils";
 import { Header } from "@/components/header";
-import { BottomNavigation } from "@/components/buttom-navigation";
+import { BottomNavigation } from "@/components/bottom-navigation";
+import { ModalProvider } from "@/components/modal-provider";
 
 const fontSans = FontSans({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -26,6 +28,8 @@ export default function RootLayout({
       <body className={cn("min-h-screen antialiased font-sans bg-background", fontSans.variable)}>
         <Header />
         {children}
+        <ModalProvider />
+        <Toaster />
         <BottomNavigation />
       </body>
     </html>
