@@ -1,27 +1,37 @@
 "use client";
 
-import { createContext, useEffect, useState } from "react";
+import axios from "axios";
+import { createContext } from "react";
+import { useQuery } from "@tanstack/react-query";
 
-import { Organization } from "@/types";
-import { auth } from "@/lib/auth";
+import type { Organization } from "@/types";
 
 type AuthProviderState = {
   organization: Organization | null;
   isAuth: boolean;
+  isLoading: boolean;
 };
 
-export const AuthContext = createContext<AuthProviderState>({ organization: null, isAuth: false });
+export const AuthContext = createContext<AuthProviderState>({
+  organization: null,
+  isAuth: false,
+  isLoading: true,
+});
+
+const fetcher = async () => {
+  return (await axios.get<Organization>("/api/auth")).data;
+};
 
 export const Authprovider = ({ children }: { children: React.ReactNode }) => {
-  const [organization, setOrganization] = useState<Organization | null>(null);
-
-  useEffect(() => {
-    auth().then((org) => setOrganization(org));
-  }, []);
+  const { data, isLoading } = useQuery({
+    queryKey: ["organization"],
+    queryFn: fetcher,
+  });
 
   const value = {
-    organization,
-    isAuth: !!organization,
+    organization: data || null,
+    isAuth: !!data,
+    isLoading,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -29,8 +29,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn("min-h-screen antialiased font-sans bg-background", fontSans.variable)}>
-        <Authprovider>
-          <QueryProvider>
+        <QueryProvider>
+          <Authprovider>
             <Header />
             <main className="w-full px-6 lg:px-0 md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto">
               {children}
@@ -39,8 +39,8 @@ export default function RootLayout({
             <ModalProvider />
             <Toaster />
             <BottomNavigation />
-          </QueryProvider>
-        </Authprovider>
+          </Authprovider>
+        </QueryProvider>
       </body>
     </html>
   );

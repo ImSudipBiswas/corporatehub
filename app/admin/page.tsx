@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import { currentOrg } from "@/actions/auth";
+import { currentOrg } from "@/lib/current-org";
 import { JobList } from "./_components/job-list";
 import { CreateJobModalTrigger } from "./_components/create-job-modal-trigger";
 

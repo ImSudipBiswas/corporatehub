@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { ChevronRight, Search } from "lucide-react";
 
+import { currentOrg } from "@/lib/current-org";
 import { suggestedJobsSearches } from "@/lib/constants";
 import { SearchBar } from "@/components/search-bar";
 import { JobCard } from "@/components/job-card";
-import { auth } from "@/lib/auth";
 
 export default async function Home() {
   // TODO: Fetch jobs from the server
-  const user = await auth();
+  const org = await currentOrg();
 
   return (
     <>
@@ -27,7 +27,7 @@ export default async function Home() {
         </div>
         <p className="mt-9 sm:mt-12 text-muted-foreground text-center text-sm">
           You can also{" "}
-          <Link href={user ? "/admin" : "#"} className="text-foreground font-bold">
+          <Link href={org ? "/admin" : "#"} className="text-foreground font-bold">
             Post a job
           </Link>{" "}
           or{" "}

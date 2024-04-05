@@ -6,7 +6,7 @@ import JobModel from "@/models/job";
 import type { Job } from "@/types";
 import type { JobFormValues } from "@/lib/utils";
 import { connectToDB } from "@/lib/mongoose";
-import { currentOrg } from "./auth";
+import { currentOrg } from "@/lib/current-org";
 
 export async function fetchJobs(page: number) {
   try {

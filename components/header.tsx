@@ -14,7 +14,7 @@ import { useModal } from "@/hooks/use-modal-store";
 export const Header = () => {
   const pathname = usePathname();
   const { onOpen } = useModal();
-  const { organization } = useAuth();
+  const { organization, isLoading } = useAuth();
 
   const onClick = useCallback(() => {
     if (organization) {
@@ -55,13 +55,20 @@ export const Header = () => {
             <span className="absolute top-0 right-1 h-1.5 w-1.5 bg-accent rounded-full" />
             <Bell size={18} className="m-auto" />
           </button>
-          <button onClick={onClick} className="rounded-full relative h-9 w-9 overflow-hidden">
-            {organization?.image ? (
-              <Image src={organization.image} alt="Profile Picture" fill className="object-cover" />
-            ) : (
-              <User size={18} className="m-auto" />
-            )}
-          </button>
+          {!isLoading && (
+            <button onClick={onClick} className="rounded-full relative h-9 w-9 overflow-hidden">
+              {organization?.image ? (
+                <Image
+                  src={organization.image}
+                  alt="Profile Picture"
+                  fill
+                  className="object-cover"
+                />
+              ) : (
+                <User size={18} className="m-auto" />
+              )}
+            </button>
+          )}
         </div>
       </nav>
     </header>
