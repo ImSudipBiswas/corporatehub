@@ -16,6 +16,7 @@ export interface Job {
   minSalary: number;
   maxSalary?: number;
   deadline: string;
+  location: string;
   createdAt: string;
   updatedAt: string;
 }

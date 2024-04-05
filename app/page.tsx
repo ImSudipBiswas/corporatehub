@@ -1,13 +1,12 @@
 import Link from "next/link";
-import { ChevronRight, Search } from "lucide-react";
+import { Search } from "lucide-react";
 
 import { currentOrg } from "@/lib/current-org";
 import { suggestedJobsSearches } from "@/lib/constants";
 import { SearchBar } from "@/components/search-bar";
-import { JobCard } from "@/components/job-card";
+import { Feed } from "@/components/feed";
 
 export default async function Home() {
-  // TODO: Fetch jobs from the server
   const org = await currentOrg();
 
   return (
@@ -36,7 +35,7 @@ export default async function Home() {
           </Link>
         </p>
       </section>
-      <section className="mt-1 w-full py-2">
+      <section className="mt-1 w-full py-6">
         <h5 className="text-medium">Suggested job searches</h5>
         <div className="mt-6 flex items-center justify-center flex-wrap gap-2">
           {suggestedJobsSearches.map((job, i) => (
@@ -47,17 +46,7 @@ export default async function Home() {
           ))}
         </div>
       </section>
-      <section className="mt-4 w-full py-2 mb-10">
-        <h5 className="text-medium">Recommended for you</h5>
-        <div className="z-20 w-full mt-6 flex items-center gap-6 py-2 overflow-x-scroll scrollbar_hidden">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <JobCard key={i} />
-          ))}
-          <button className="bg-primary text-white p-2 rounded-full">
-            <ChevronRight size={18} />
-          </button>
-        </div>
-      </section>
+      <Feed />
     </>
   );
 }

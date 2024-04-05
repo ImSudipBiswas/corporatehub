@@ -31,7 +31,7 @@ export const Authprovider = ({ children }: { children: React.ReactNode }) => {
   const value = {
     organization: data || null,
     isAuth: !!data,
-    isLoading,
+    isLoading: isLoading && !data,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

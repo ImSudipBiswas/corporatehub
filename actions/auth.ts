@@ -5,5 +5,5 @@ import { revalidatePath } from "next/cache";
 
 export const signOut = () => {
   cookies().set("token", "", { maxAge: 0 });
-  revalidatePath("/");
+  revalidatePath("/admin");
 };

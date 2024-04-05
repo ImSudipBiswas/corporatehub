@@ -6,7 +6,8 @@ import type { Organization } from "@/types";
 
 export const currentOrg = async () => {
   try {
-    const token = cookies().get("token")?.value;
+    const allCookies = cookies().getAll();
+    const token = allCookies.filter((cookie) => cookie.name === "token")[0].value;
 
     if (!token) return null;
 
@@ -17,7 +18,6 @@ export const currentOrg = async () => {
 
     return org;
   } catch (error) {
-    console.log(error);
-    throw new Error("Failed to fetch current organization");
+    return null;
   }
 };

@@ -6,6 +6,7 @@ import { SignInModal } from "@/components/modals/sign-in";
 import { SignUpModal } from "@/components/modals/sign-up";
 import { SignOutModal } from "@/components/modals/sign-out";
 import { AddJobModal } from "@/components/modals/add-job";
+import { JobModal } from "@/components/modals/job";
 
 export const ModalProvider = () => {
   const [mounted, setMounted] = React.useState(false);
@@ -22,6 +23,7 @@ export const ModalProvider = () => {
       <SignUpModal />
       <SignOutModal />
       <AddJobModal />
+      <JobModal />
     </>
   );
 };

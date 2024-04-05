@@ -1,17 +1,25 @@
 import { create } from "zustand";
 
-type Modal = "sign-in" | "sign-up" | "sign-out" | "add-job" | "update-job" | "delete-job";
+import { Job } from "@/types";
+
+type Modal = "sign-in" | "sign-up" | "sign-out" | "add-job" | "update-job" | "delete-job" | "job";
+
+interface Data extends Job {
+  formattedSalary?: string;
+  orgImage: string | null;
+}
 
 interface ModalState {
   isOpen: boolean;
   type: Modal | null;
-  onOpen: (type: Modal) => void;
+  data?: Data;
+  onOpen: (type: Modal, data?: Data) => void;
   onClose: () => void;
 }
 
 export const useModal = create<ModalState>((set) => ({
   isOpen: false,
   type: null,
-  onOpen: (type) => set({ isOpen: true, type }),
+  onOpen: (type, data) => set({ isOpen: true, type, data }),
   onClose: () => set({ isOpen: false, type: null }),
 }));

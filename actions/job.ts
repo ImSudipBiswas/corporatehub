@@ -30,6 +30,24 @@ export async function fetchJobs(page: number) {
   }
 }
 
+export async function fetchFeed({ pageParam }: { pageParam: number }) {
+  try {
+    await connectToDB();
+
+    const skip = (pageParam - 1) * 3;
+
+    const jobs = await JobModel.find()
+      .populate("organization")
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(3);
+
+    return JSON.stringify(jobs);
+  } catch (error) {
+    throw new Error("Failed to fetch jobs");
+  }
+}
+
 export async function createJob(values: JobFormValues) {
   try {
     await connectToDB();
