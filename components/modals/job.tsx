@@ -58,7 +58,7 @@ export const JobModal = () => {
             <DialogTitle className="w-fit">{data?.title}</DialogTitle>
             <DialogDescription className="flex items-center gap-1.5">
               {data.location} <span className="h-1 w-1 bg-muted-foreground rounded-full" />
-              {typeof data.organization !== "string" && data.organization.name}
+              {data.organization.name}
             </DialogDescription>
           </div>
         </DialogHeader>

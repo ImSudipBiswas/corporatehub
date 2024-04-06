@@ -185,6 +185,7 @@ export const UpdateJobModal = () => {
                       <FormControl>
                         <Button
                           variant="outline"
+                          disabled={isLoading}
                           className={cn(
                             "w-full pl-3 text-left font-normal",
                             !field.value && "text-muted-foreground"

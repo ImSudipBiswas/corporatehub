@@ -21,7 +21,7 @@ export const JobCard = ({ data }: { data: JobWithOrganization }) => {
   return (
     <div
       onClick={() => onOpen("job", data)}
-      className="cursor-pointer min-w-72 rounded-xl shadow border p-5 lg:p-6 hover:shadow-none transition"
+      className="cursor-pointer min-w-72 rounded-xl border p-5 lg:p-6"
     >
       <div className="h-14 w-14 bg-muted rounded-full p-2">
         <div className="h-full w-full rounded-full bg-muted relative overflow-hidden">

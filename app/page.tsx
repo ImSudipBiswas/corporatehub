@@ -22,7 +22,7 @@ export default function Home() {
               of your search
             </p>
           </div>
-          <SearchBar className="absolute max-sm:-bottom-4 -bottom-6 inset-x-0 max-w-[90%] lg:max-w-[80%] mx-auto" />
+          <SearchBar />
         </div>
         <p className="mt-9 sm:mt-12 text-muted-foreground text-center text-sm">
           You can also{" "}
