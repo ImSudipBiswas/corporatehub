@@ -13,6 +13,7 @@ export default function Home() {
     <>
       <section className="py-10 w-full">
         <div className="relative h-[250px] sm:h-[300px] md:h-[400px] rounded-3xl [background:linear-gradient(135deg,var(--secondary)_25%,var(--primary)_85%)]">
+          <Images />
           <div className="absolute bottom-12 sm:bottom-20 inset-x-0 space-y-3">
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center text-background font-bold">
               Search for your next job
@@ -63,5 +64,22 @@ function FeedSuspense() {
         ))}
       </div>
     </div>
+  );
+}
+
+function Images() {
+  return (
+    <>
+      <div className="max-md:hidden h-24 w-24 rounded-full bg-[url(https://images.pexels.com/photos/18281423/pexels-photo-18281423/free-photo-of-portrait-of-an-african-man-wearing-black-shirt.jpeg?auto=compress&cs=tinysrgb&w=600)] bg-center bg-cover bg-white absolute left-20 lg:left-24 top-12" />
+      <div className="bg-[url(https://images.pexels.com/photos/18265824/pexels-photo-18265824/free-photo-of-portrait-of-an-african-man-wearing-a-cap.jpeg?auto=compress&cs=tinysrgb&w=600)] bg-center bg-cover max-md:hidden h-24 w-24 rounded-full bg-white absolute right-20 lg:right-24 top-12" />
+
+      <div className="bg-[url(https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=600)] bg-center bg-cover h-16 w-16 md:h-20 md:w-20 rounded-full bg-white absolute left-16 sm:left-20 md:left-48 lg:left-60 top-4 md:top-20" />
+      <div className="bg-[url(https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=600)] bg-cover bg-center h-16 w-16 md:h-20 md:w-20 rounded-full bg-white absolute right-16 sm:right-20 md:right-48 lg:right-60 top-4 md:top-20" />
+
+      <div className="bg-[url(https://images.pexels.com/photos/789822/pexels-photo-789822.jpeg?auto=compress&cs=tinysrgb&w=600)] bg-center bg-cover h-24 w-24 rounded-full bg-white absolute left-[22rem] top-6 max-xl:hidden" />
+      <div className="bg-[url(https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)] bg-cover bg-center h-24 w-24 rounded-full bg-white absolute right-[22rem] top-6 max-xl:hidden" />
+      
+      <div className="bg-[url(https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&cs=tinysrgb&w=600)] bg-cover bg-center h-20 w-20 md:h-28 md:w-28 rounded-full bg-white absolute left-1/2 right-1/2 top-6 md:top-20 -translate-x-1/2" />
+    </>
   );
 }
