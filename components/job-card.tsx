@@ -1,10 +1,13 @@
+"use client";
+
 import Image from "next/image";
 import { useMemo } from "react";
 
-import { Job } from "@/types";
+import type { JobWithOrganization } from "@/types";
+import { formatSalary } from "@/lib/utils";
 import { useModal } from "@/hooks/use-modal-store";
 
-export const JobCard = ({ data }: { data: Job }) => {
+export const JobCard = ({ data }: { data: JobWithOrganization }) => {
   const { onOpen } = useModal();
 
   const location = useMemo(
@@ -21,25 +24,11 @@ export const JobCard = ({ data }: { data: Job }) => {
     }
   }, [data.organization]);
 
-  const formattedSalary = useMemo(() => {
-    if (data.minSalary && data.maxSalary) {
-      return `$${data.minSalary / 1000}k - $${data.maxSalary / 1000}k`;
-    } else if (data.minSalary && !data.maxSalary) {
-      return `$${data.minSalary / 1000}k`;
-    }
-  }, [data.minSalary, data.maxSalary]);
-
-  const formattedData = useMemo(() => {
-    return {
-      ...data,
-      orgImage,
-      formattedSalary,
-    };
-  }, [data, orgImage, formattedSalary]);
+  const formattedSalary = formatSalary(data.minSalary, data.maxSalary);
 
   return (
     <div
-      onClick={() => onOpen("job", formattedData)}
+      onClick={() => onOpen("job", data)}
       className="cursor-pointer min-w-72 rounded-xl shadow border p-5 lg:p-6 hover:shadow-none transition"
     >
       <div className="h-14 w-14 bg-muted rounded-full p-2">

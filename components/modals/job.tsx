@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useModal } from "@/hooks/use-modal-store";
+import { formatSalary } from "@/lib/utils";
 
 export const JobModal = () => {
   const { isOpen, onClose, type, data } = useModal();
@@ -31,8 +32,10 @@ export const JobModal = () => {
     });
   };
 
-  const isExpired = new Date(data?.deadline as string) < new Date();
+  if (!data) return null;
 
+  const isExpired = new Date(data.deadline!) < new Date();
+  const salary = formatSalary(data.minSalary, data.maxSalary);
   const isModalOpen = isOpen && type === "job";
 
   return (
@@ -40,17 +43,17 @@ export const JobModal = () => {
       <DialogContent>
         <DialogHeader className="flex flex-row items-center gap-2.5">
           <div className="h-14 w-14 bg-muted rounded-full p-2">
-            {data?.orgImage && (
+            {data.organization && (
               <div className="h-full w-full rounded-full relative overflow-hidden">
-                <Image src={data.orgImage} alt="" fill className="object-cover" />
+                <Image src={data.organization.image} alt="" fill className="object-cover" />
               </div>
             )}
           </div>
           <div className="space-y-1.5 flex-1">
             <DialogTitle className="w-fit">{data?.title}</DialogTitle>
             <DialogDescription className="flex items-center gap-1.5">
-              {data?.location} <span className="h-1 w-1 bg-muted-foreground rounded-full" />
-              {typeof data?.organization !== "string" && data?.organization.name}
+              {data.location} <span className="h-1 w-1 bg-muted-foreground rounded-full" />
+              {typeof data.organization !== "string" && data.organization.name}
             </DialogDescription>
           </div>
         </DialogHeader>
@@ -58,13 +61,13 @@ export const JobModal = () => {
           <p className="font-semibold text-lg">Job description</p>
           <pre className="whitespace-pre-wrap font-sans text-sm">{data?.description}</pre>
           <div className="flex items-center justify-between">
-            <p className="font-medium text-sm">Salary - {data?.formattedSalary} per month</p>
+            <p className="font-medium text-sm">Salary - {salary} per month</p>
             {isExpired || !data?.deadline ? (
               <p className="text-xs text-red-500 bg-red-500/15 rounded-full py-1 px-2">
                 Application are closed
               </p>
             ) : (
-              <p className="text-xs">Apply by {format(data?.deadline as string, "PPP")}</p>
+              <p className="text-xs">Apply by {format(data.deadline, "PPP")}</p>
             )}
           </div>
         </div>

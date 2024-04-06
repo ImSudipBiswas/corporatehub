@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { Loader2 } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-hot-toast";
-import axios, { AxiosError } from "axios";
 
 import {
   Dialog,
@@ -26,6 +25,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useModal } from "@/hooks/use-modal-store";
 import { SignInFormValues, cn, signInSchema } from "@/lib/utils";
+import { login } from "@/actions/auth";
 
 export const SignInModal = () => {
   const { isOpen, type, onClose, onOpen } = useModal();
@@ -42,11 +42,10 @@ export const SignInModal = () => {
 
   const onSubmit = async (values: SignInFormValues) => {
     try {
-      await axios.post("/api/auth/sign-in", values);
+      await login(values.email, values.password);
       toast.success("Signed in successfully");
-      window.location.reload();
-    } catch (error: AxiosError | any) {
-      toast.error(error.response?.data || error.message);
+    } catch (error: any) {
+      toast.error(error.message);
       form.reset();
     }
   };

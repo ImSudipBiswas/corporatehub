@@ -3,7 +3,7 @@
 import { useTransition } from "react";
 import { Loader2 } from "lucide-react";
 
-import { signOut } from "@/actions/auth";
+import { signOut } from "@/auth";
 import {
   Dialog,
   DialogContent,
@@ -21,7 +21,6 @@ export const SignOutModal = () => {
   const handleSignOut = () => {
     startTransition(() => {
       signOut();
-      window.location.reload();
     });
   };
 
@@ -34,17 +33,10 @@ export const SignOutModal = () => {
           <DialogTitle>Sign out</DialogTitle>
           <DialogDescription>Are you sure you want to sign out?</DialogDescription>
         </DialogHeader>
-        <form className="space-y-4">
-          <Button
-            formAction={handleSignOut}
-            disabled={isPending}
-            type="submit"
-            className="w-full flex items-center"
-          >
-            {isPending && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
-            {isPending ? "Signing out..." : "Sign out"}
-          </Button>
-        </form>
+        <Button onClick={handleSignOut} disabled={isPending} className="w-full flex items-center">
+          {isPending && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
+          {isPending ? "Signing out..." : "Sign out"}
+        </Button>
       </DialogContent>
     </Dialog>
   );

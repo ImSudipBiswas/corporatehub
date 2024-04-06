@@ -1,19 +1,14 @@
 import { create } from "zustand";
 
-import { Job } from "@/types";
+import { JobWithOrganization } from "@/types";
 
 type Modal = "sign-in" | "sign-up" | "sign-out" | "add-job" | "update-job" | "delete-job" | "job";
-
-interface Data extends Job {
-  formattedSalary?: string;
-  orgImage: string | null;
-}
 
 interface ModalState {
   isOpen: boolean;
   type: Modal | null;
-  data?: Data;
-  onOpen: (type: Modal, data?: Data) => void;
+  data?: JobWithOrganization;
+  onOpen: (type: Modal, data?: JobWithOrganization) => void;
   onClose: () => void;
 }
 

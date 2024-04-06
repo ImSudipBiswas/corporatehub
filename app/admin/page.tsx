@@ -1,10 +1,19 @@
 import { redirect } from "next/navigation";
 
-import { currentOrg } from "@/lib/current-org";
+import { currentOrg } from "@/lib/org";
 import { JobList } from "./_components/job-list";
 import { CreateJobModalTrigger } from "./_components/create-job-modal-trigger";
 
-export default async function AdminPage() {
+interface AdminPageProps {
+  searchParams: {
+    page: number;
+    search: string;
+  };
+}
+
+export default async function AdminPage({
+  searchParams: { page = 1, search = "" },
+}: AdminPageProps) {
   const org = await currentOrg();
   if (!org) {
     return redirect("/");
@@ -23,7 +32,7 @@ export default async function AdminPage() {
           <CreateJobModalTrigger />
         </div>
       </section>
-      <JobList />
+      <JobList orgId={org.id} page={page} search={search} />
     </>
   );
 }
