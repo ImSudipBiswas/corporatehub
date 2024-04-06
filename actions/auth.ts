@@ -1,9 +1,13 @@
 "use server";
 
-import { cookies } from "next/headers";
-import { revalidatePath } from "next/cache";
+import { signIn, signOut } from "@/auth";
 
-export const signOut = () => {
-  cookies().set("token", "", { maxAge: 0 });
-  revalidatePath("/admin");
+export const login = async (email: string, password: string) => {
+  await signIn("credentials", { email, password });
+  return;
+};
+
+export const logout = async () => {
+  await signOut();
+  return;
 };

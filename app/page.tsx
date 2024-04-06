@@ -1,14 +1,14 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import { Search } from "lucide-react";
 
-import { currentOrg } from "@/lib/current-org";
 import { suggestedJobsSearches } from "@/lib/constants";
-import { SearchBar } from "@/components/search-bar";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Feed } from "@/components/feed";
+import { SearchBar } from "@/components/search-bar";
+import { JobCardSkeleton } from "@/components/skeletons/job-card-skeleton";
 
-export default async function Home() {
-  const org = await currentOrg();
-
+export default function Home() {
   return (
     <>
       <section className="py-10 w-full">
@@ -26,7 +26,7 @@ export default async function Home() {
         </div>
         <p className="mt-9 sm:mt-12 text-muted-foreground text-center text-sm">
           You can also{" "}
-          <Link href={org ? "/admin" : "#"} className="text-foreground font-bold">
+          <Link href="/admin" className="text-foreground font-bold">
             Post a job
           </Link>{" "}
           or{" "}
@@ -46,7 +46,22 @@ export default async function Home() {
           ))}
         </div>
       </section>
-      <Feed />
+      <Suspense fallback={<FeedSuspense />}>
+        <Feed />
+      </Suspense>
     </>
+  );
+}
+
+function FeedSuspense() {
+  return (
+    <div className="mt-4 w-full py-2 mb-10">
+      <Skeleton className="h-6 w-24" />
+      <div className="z-20 w-full mt-6 flex items-center gap-6 py-2 overflow-x-scroll scrollbar_hidden">
+        {Array.from({ length: 3 }).map((_, i) => (
+          <JobCardSkeleton key={i} />
+        ))}
+      </div>
+    </div>
   );
 }

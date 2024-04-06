@@ -1,15 +1,16 @@
 "use client";
 
+import axios, { AxiosError } from "axios";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-hot-toast";
 import { format } from "date-fns";
 import { CalendarIcon, Loader2 } from "lucide-react";
 
-import { useAuth } from "@/hooks/use-auth";
 import { useModal } from "@/hooks/use-modal-store";
-import { createJob } from "@/actions/job";
 import { JobFormValues, cn, jobSchema } from "@/lib/utils";
 import {
   Dialog,
@@ -34,8 +35,9 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
 export const AddJobModal = () => {
+  const router = useRouter();
   const { isOpen, onClose, type } = useModal();
-  const { organization } = useAuth();
+  const { data } = useSession();
 
   const form = useForm<JobFormValues>({
     resolver: zodResolver(jobSchema),
@@ -46,7 +48,7 @@ export const AddJobModal = () => {
       maxSalary: 60000,
       location: "Remote",
       organizationId: "",
-      deadline: new Date(),
+      deadline: new Date().toISOString(),
     },
   });
 
@@ -57,11 +59,12 @@ export const AddJobModal = () => {
 
   const onSubmit = async (values: JobFormValues) => {
     try {
-      await createJob(values);
+      await axios.post("/api/jobs", values);
       toast.success("Job opening created successfully");
+      router.refresh();
       handleClose();
-    } catch (error: Error | any) {
-      toast.error(error.message);
+    } catch (error: AxiosError | any) {
+      toast.error(error?.response?.data || error.message);
       form.reset();
     }
   };
@@ -70,10 +73,10 @@ export const AddJobModal = () => {
   const isLoading = form.formState.isSubmitting;
 
   useEffect(() => {
-    if (organization) {
-      form.setValue("organizationId", organization._id);
+    if (data?.user?.id) {
+      form.setValue("organizationId", data.user.id);
     }
-  }, [form, organization]);
+  }, [form, data?.user]);
 
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
@@ -189,7 +192,7 @@ export const AddJobModal = () => {
                     <PopoverContent className="w-auto p-0" align="start">
                       <Calendar
                         mode="single"
-                        selected={field.value}
+                        selected={new Date(field.value)}
                         onSelect={field.onChange}
                         // @ts-ignore
                         disabled={isLoading || ((date) => date < new Date() || date === new Date())}
