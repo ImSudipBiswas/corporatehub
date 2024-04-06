@@ -37,7 +37,7 @@ export async function GET(req: Request) {
   try {
     const url = new URL(req.url);
     const page = +(url.searchParams.get("page") as string) || 1;
-    const limit = +(url.searchParams.get("limit") as string);
+    const limit = +(url.searchParams.get("limit") as string) || 3;
     const search = url.searchParams.get("search") as string;
     const orgId = url.searchParams.get("orgId") as string;
     const skip = (page - 1) * limit;
@@ -54,7 +54,7 @@ export async function GET(req: Request) {
 
     const jobs = await db.job.findMany({
       where,
-      take: limit || 3,
+      take: limit,
       skip,
       include: { organization: true },
       orderBy: { createdAt: "desc" },

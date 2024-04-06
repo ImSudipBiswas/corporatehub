@@ -23,15 +23,16 @@ export const DeleteJobModal = () => {
 
   const handleDeleteJob = () => {
     startTransition(() => {
-      try {
-        axios.delete(`/api/jobs/${data?.id}`).then(() => {
+      axios
+        .delete(`/api/jobs/${data?.id}`)
+        .then(() => {
           router.refresh();
           onClose();
+        })
+        .catch((error: AxiosError | any) => {
+          console.log(error);
+          toast.error(error?.response?.data || error.message);
         });
-      } catch (error: AxiosError | any) {
-        console.log(error);
-        toast.error(error?.response?.data || error.message);
-      }
     });
   };
 
@@ -43,7 +44,7 @@ export const DeleteJobModal = () => {
     <Dialog open={isModalOpen} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Delete job &#34;{data.title}&#34;</DialogTitle>
+          <DialogTitle>Delete opening for {data.title}?</DialogTitle>
           <DialogDescription>
             Are you sure you want to delete this job? This action cannot be undone.
           </DialogDescription>

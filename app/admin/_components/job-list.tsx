@@ -2,10 +2,11 @@ import axios from "axios";
 
 import { JobWithOrganization } from "@/types";
 import { JobCard } from "./job-card";
+import { Pagination } from "./pagination";
 
 const fetchJobs = async (orgId: string, page: number, search: string) => {
   const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/jobs?orgId=${orgId}&page=${page}&search=${search}`
+    `${process.env.NEXT_PUBLIC_APP_URL}/api/jobs?orgId=${orgId}&page=${page}&limit=10&search=${search}`
   );
   return res.data;
 };
@@ -21,12 +22,28 @@ export const JobList = async ({
 }) => {
   const result = await fetchJobs(orgId, page, search);
 
+  if (!result.jobs.length) {
+    return (
+      <div className="mt-4 h-[23vh] w-full flex flex-col items-center justify-center">
+        {search.length > 0 ? (
+          <h4 className="text-lg font-semibold">
+            No jobs found for the search term {`"${search}"`}
+          </h4>
+        ) : (
+          <h4 className="font-semibold text-lg">
+            <span className="text-primary">Create a job</span> to get started
+          </h4>
+        )}
+      </div>
+    );
+  }
+
   return (
-    <section className="w-full py-6 mt-4">
-      <div className="flex items-center justify-between"></div>
-      <div className="flex flex-col mt-4">
+    <>
+      <div className="flex flex-col gap-3 mt-4">
         {result?.jobs?.map((job: JobWithOrganization) => <JobCard job={job} key={job.id} />)}
       </div>
-    </section>
+      <Pagination isNext={result.isNext} page={page} />
+    </>
   );
 };
