@@ -78,7 +78,7 @@ function Images() {
 
       <div className="bg-[url(https://images.pexels.com/photos/789822/pexels-photo-789822.jpeg?auto=compress&cs=tinysrgb&w=600)] bg-center bg-cover h-24 w-24 rounded-full bg-white absolute left-[22rem] top-6 max-xl:hidden" />
       <div className="bg-[url(https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)] bg-cover bg-center h-24 w-24 rounded-full bg-white absolute right-[22rem] top-6 max-xl:hidden" />
-      
+
       <div className="bg-[url(https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&cs=tinysrgb&w=600)] bg-cover bg-center h-20 w-20 md:h-28 md:w-28 rounded-full bg-white absolute left-1/2 right-1/2 top-6 md:top-20 -translate-x-1/2" />
     </>
   );

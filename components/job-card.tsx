@@ -25,14 +25,12 @@ export const JobCard = ({ data }: { data: JobWithOrganization }) => {
     >
       <div className="h-14 w-14 bg-muted rounded-full p-2">
         <div className="h-full w-full rounded-full bg-muted relative overflow-hidden">
-          {data.organization?.image && (
-            <Image
-              src={data.organization.image}
-              alt="Organization logo"
-              fill
-              className="object-cover"
-            />
-          )}
+          <Image
+            src={data.organization.image}
+            alt="Organization logo"
+            fill
+            className="object-cover"
+          />
         </div>
       </div>
       <h5 className="font-bold mt-4">{data.title}</h5>

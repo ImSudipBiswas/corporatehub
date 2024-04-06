@@ -43,16 +43,14 @@ export const JobModal = () => {
       <DialogContent>
         <DialogHeader className="flex flex-row items-center gap-2.5">
           <div className="h-14 w-14 bg-muted rounded-full p-2">
-            {data.organization?.image && (
-              <div className="h-full w-full rounded-full relative overflow-hidden">
-                <Image
-                  src={data.organization.image}
-                  alt="Organization logo"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            )}
+            <div className="h-full w-full rounded-full relative overflow-hidden">
+              <Image
+                src={data.organization.image}
+                alt="Organization logo"
+                fill
+                className="object-cover"
+              />
+            </div>
           </div>
           <div className="space-y-1.5 flex-1">
             <DialogTitle className="w-fit">{data?.title}</DialogTitle>

@@ -44,8 +44,8 @@ export const AddJobModal = () => {
     defaultValues: {
       title: "",
       description: "",
-      minSalary: 40000,
-      maxSalary: 60000,
+      minSalary: 1000,
+      maxSalary: 1000,
       location: "Remote",
       organizationId: "",
       deadline: new Date().toISOString(),

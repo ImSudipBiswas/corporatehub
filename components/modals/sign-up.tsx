@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { ImageUpload } from "@/components/image-upload";
+import { FileUpload } from "@/components/file-upload";
 import { useModal } from "@/hooks/use-modal-store";
 import { type SignUpFormValues, signUpSchema, cn } from "@/lib/utils";
 import { login } from "@/actions/auth";
@@ -46,9 +46,7 @@ export const SignUpModal = () => {
 
   const onSubmit = async (values: SignUpFormValues) => {
     try {
-      // Temporarily remove image from values
-      // TODO: Implement image upload
-      await axios.post("/api/register", { ...values, image: "" });
+      await axios.post("/api/register", values);
       await login(values.email, values.password);
       handleClose();
     } catch (error: AxiosError | any) {
@@ -87,7 +85,7 @@ export const SignUpModal = () => {
                 <FormItem>
                   <FormLabel>Profile picture</FormLabel>
                   <FormControl>
-                    <ImageUpload label="Profile picture" disabled={isLoading} {...field} />
+                    <FileUpload value={field.value} onChange={field.onChange} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
