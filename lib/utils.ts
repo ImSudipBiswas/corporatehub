@@ -18,7 +18,7 @@ export const signUpSchema = z.object({
   name: z
     .string({ required_error: "Name is required" })
     .min(3, "Name must be at least 3 characters"),
-  image: z.string({ required_error: "Image is required" }).min(1, "Image is required"),
+  image: z.optional(z.string()),
   email: z
     .string({ required_error: "Email is required" })
     .email("Invalid email address")

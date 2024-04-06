@@ -12,7 +12,7 @@ export default {
         const validated = signInSchema.safeParse(credentials);
         if (validated.success) {
           const { email, password } = validated.data;
-          
+
           const user = await findOrgByEmail(email);
           if (!user || !user.password) return null;
 

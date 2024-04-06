@@ -7,6 +7,8 @@ import { SignUpModal } from "@/components/modals/sign-up";
 import { SignOutModal } from "@/components/modals/sign-out";
 import { AddJobModal } from "@/components/modals/add-job";
 import { JobModal } from "@/components/modals/job";
+import { DeleteJobModal } from "@/components/modals/delete-job";
+import { UpdateJobModal } from "@/components/modals/update-job";
 
 export const ModalProvider = () => {
   const [mounted, setMounted] = React.useState(false);
@@ -24,6 +26,8 @@ export const ModalProvider = () => {
       <SignOutModal />
       <AddJobModal />
       <JobModal />
+      <DeleteJobModal />
+      <UpdateJobModal />
     </>
   );
 };

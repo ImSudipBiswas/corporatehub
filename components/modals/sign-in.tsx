@@ -43,7 +43,7 @@ export const SignInModal = () => {
   const onSubmit = async (values: SignInFormValues) => {
     try {
       await login(values.email, values.password);
-      toast.success("Signed in successfully");
+      handleClose();
     } catch (error: any) {
       toast.error(error.message);
       form.reset();

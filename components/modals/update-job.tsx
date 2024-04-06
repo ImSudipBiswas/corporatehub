@@ -1,10 +1,8 @@
 "use client";
 
 import axios, { AxiosError } from "axios";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-hot-toast";
 import { format } from "date-fns";
@@ -33,11 +31,11 @@ import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { useEffect } from "react";
 
-export const AddJobModal = () => {
+export const UpdateJobModal = () => {
   const router = useRouter();
-  const { isOpen, onClose, type } = useModal();
-  const { data } = useSession();
+  const { isOpen, onClose, type, data } = useModal();
 
   const form = useForm<JobFormValues>({
     resolver: zodResolver(jobSchema),
@@ -59,8 +57,8 @@ export const AddJobModal = () => {
 
   const onSubmit = async (values: JobFormValues) => {
     try {
-      await axios.post("/api/jobs", values);
-      toast.success("Job opening created successfully");
+      await axios.patch(`/api/jobs/${data?.id}`, values);
+      toast.success("Job opening updated successfully");
       router.refresh();
       handleClose();
     } catch (error: AxiosError | any) {
@@ -69,22 +67,30 @@ export const AddJobModal = () => {
     }
   };
 
-  const isModalOpen = isOpen && type === "add-job";
+  const isModalOpen = isOpen && type === "update-job";
   const isLoading = form.formState.isSubmitting;
 
   useEffect(() => {
-    if (data?.user?.id) {
-      form.setValue("organizationId", data.user.id);
+    if (data) {
+      form.setValue("title", data?.title);
+      form.setValue("description", data?.description);
+      form.setValue("minSalary", data?.minSalary);
+      form.setValue("maxSalary", data?.maxSalary);
+      form.setValue("location", data?.location);
+      form.setValue("organizationId", data?.organizationId);
+      form.setValue("deadline", new Date(data?.deadline).toISOString());
     }
-  }, [form, data?.user]);
+  }, [data, form]);
+
+  if (!data) return null;
 
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create a new opening</DialogTitle>
+          <DialogTitle>Update an existing job opening</DialogTitle>
           <DialogDescription>
-            Fill in the details below to create a new job opening.
+            Update the details of the job opening below. Make sure to provide accurate information.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -207,7 +213,7 @@ export const AddJobModal = () => {
             />
             <Button type="submit" disabled={isLoading} className="flex items-center w-full">
               {isLoading && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
-              {isLoading ? "Creating..." : "Create"}
+              {isLoading ? "Updating..." : "Update"}
             </Button>
           </form>
         </Form>

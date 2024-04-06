@@ -15,7 +15,6 @@ export async function POST(req: Request) {
   const { name, image, email, password } = validated.data;
 
   try {
-
     const existingOrg = await db.organization.findUnique({ where: { email } });
     if (existingOrg) {
       return new NextResponse("Organization with this email already exists", { status: 400 });

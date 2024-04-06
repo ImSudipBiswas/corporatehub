@@ -3,7 +3,7 @@
 import { useTransition } from "react";
 import { Loader2 } from "lucide-react";
 
-import { signOut } from "@/auth";
+import { logout } from "@/actions/auth";
 import {
   Dialog,
   DialogContent,
@@ -20,7 +20,8 @@ export const SignOutModal = () => {
 
   const handleSignOut = () => {
     startTransition(() => {
-      signOut();
+      logout();
+      onClose();
     });
   };
 

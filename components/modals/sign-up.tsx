@@ -28,7 +28,6 @@ import { ImageUpload } from "@/components/image-upload";
 import { useModal } from "@/hooks/use-modal-store";
 import { type SignUpFormValues, signUpSchema, cn } from "@/lib/utils";
 import { login } from "@/actions/auth";
-import { supabase } from "@/lib/supabase";
 
 export const SignUpModal = () => {
   const { isOpen, type, onClose, onOpen } = useModal();
@@ -47,16 +46,11 @@ export const SignUpModal = () => {
 
   const onSubmit = async (values: SignUpFormValues) => {
     try {
-      const { data } = await supabase.storage
-        .from("corporatehub")
-        .upload(`image_${values.email}`, values.image);
-      console.log(data);
-      await axios.post("/api/register", {
-        ...values,
-        image: `${process.env.NEXT_PUBLIC_SUPABASE_URL!}/storage/v1/object/public/corporatehub/${data?.path}`,
-      });
+      // Temporarily remove image from values
+      // TODO: Implement image upload
+      await axios.post("/api/register", { ...values, image: "" });
       await login(values.email, values.password);
-      toast.success("Signed in successfully");
+      handleClose();
     } catch (error: AxiosError | any) {
       toast.error(error.response?.data || error.message);
       form.reset();
